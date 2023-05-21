@@ -1,6 +1,5 @@
-import Image from 'next/image'
-import Footer from '@/components/footer'
-import { Metadata } from 'next'
+import Footer from '@/components/footer';
+import { Metadata } from 'next';
 
 
 export const metadata: Metadata = {
