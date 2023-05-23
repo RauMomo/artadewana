@@ -10,7 +10,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
   <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
     <div className="lg:flex lg:items-start lg:gap-8">
       <div className="mt-8 grid grid-cols-3 gap-8 lg:mt-0 lg:grid-cols-3 lg:gap-y-16">
-        <div className="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+        <div className="col-span-3 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
           <p className="font-large text-gray-900">Menu</p>
           <nav aria-label="Footer Navigation - Menu" className="mt-6">
             <ul className="space-y-4 text-sm">
@@ -22,7 +22,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             </ul>
           </nav>
         </div>
-        <div className="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+        <div className="col-span-3 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
           <p className="font-large text-gray-900">Kategori</p>
           <nav aria-label="Footer Navigation - Kategori" className="mt-6">
             <ul className="space-y-4 text-sm">
@@ -49,7 +49,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             </ul>
           </nav>
         </div>
-        <div className="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+        <div className="col-span-3 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
           <p className="font-large text-gray-900 ml-auto">Kontak</p>
         </div>
       </div>
