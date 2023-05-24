@@ -1,17 +1,22 @@
+import CategoryBanner from '@/components/CategoryBanner';
 import CategoryMenu from '@/components/CategoryMenu';
 import Footer from '@/components/footer';
+import { Direction } from '@/utils/enum';
 import { Metadata } from 'next';
-import { AiOutlineArrowRight } from 'react-icons/ai';
 
 
 export const metadata: Metadata = {
   title: 'Artadewana',
+  creator: 'Artadewana Production Team',
+
 };
 
 export default function Home() {
+  var categoryList = [{name: "Gerabah", desc: "Gerabah Terbaik Untuk Anda"}, {name: "Keramik", desc: "Keramik Terbaik Untuk Anda"}, {name: "Porcelain", desc: "Porcelain Terbaik Untuk Anda"}, {name: "Bata & Genteng", desc: "Bata & Genteng Terbaik Untuk Anda"}]
+
   return (
     <div className="block m-0 place-content-start bg-white">
-      <main className="relative">
+      <main className="relative max-w-screen-xl">
         <section className="max-w-screen-xl container bg-origin-border bg-no-repeat bg-cover items-stretch bg-center self-auto bg-local bg-[url('https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2.png')] bg-blend-multiply">
           <div className="grid grid-cols-12 max-w-full">
             <div className="grid grid-rows-1 col-start-2 col-end-6 p-14 justify-between items-start place-content-start">
@@ -34,31 +39,24 @@ export default function Home() {
             <CategoryMenu name='Bata & Genteng' />
           </div>
         </section>
-        <section className="max-w-screen-xl container bg-origin-border bg-no-repeat bg-cover items-stretch bg-center self-start bg-local bg-[url('https://img.freepik.com/premium-photo/earthenware-plate-burlap-sackcloth-made-clay-traditional-cooking-utensils-gerabah-tanah_717054-1044.jpg?w=1800')] bg-blend-multiply" >
-          <div className='grid grid-cols-3 grid-rows-3 max-w-full'>
-            <div className="col-span-4 col-start-2 row-start-2 items-end justify-center text-center text-black">
-              <div className='bg-slate-300 inline-grid grid-rows-4 p-6 rounded-sm'>
-                <div className='text-3xl row-start-1'>GERABAH</div>
-                <div className='text-lg row-start-2'>Gunakan Terbaik Untuk Anda</div>
-                <div className='row-start-4'>
-                  <div className='border-2 border-solid border-black cursor-pointer inline-block p-2'>Eksplor Produk</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className='max-w-screen-xl container px-8 py-8 items-center content-center bg-center text-center'>
-          <div className='flex-nowrap flex justify-between'>
-            <div className="text-black flex-auto m-auto items-center flex-grow pl-12">Produk Baru</div>
-            <div className='text-black inline-flex'>See All<span className='pl-2 mt-1'><AiOutlineArrowRight /></span></div>
-          </div>
-          <div className='inline-grid grid-cols-category gap-20 h-72 align-middle mt-8 mb-4'>
-            <CategoryMenu name='Gerabah' />
-            <CategoryMenu name='Keramik' />
-            <CategoryMenu name='Porcelain' />
-            <CategoryMenu name='Bata & Genteng' />
-          </div>
-        </section>
+        <div>
+          {categoryList.map((category, index, arr) => {
+            return (
+              <>
+                {index % 2 == 0 && (
+                  <>
+                    <CategoryBanner name={category.name} desc={category.desc} align={Direction.Right} />
+                  </>
+                )}
+                {index % 2 != 0 && (
+                  <>
+                    <CategoryBanner name={category.name} desc={category.desc} align={Direction.Left} />
+                  </>
+                )}
+              </>
+            );
+          })}
+        </div>
       </main>
       <Footer className="w-full" />
     </div>
