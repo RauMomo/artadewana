@@ -19,6 +19,7 @@
 @layer base{
   html {
     font-family: 'Inter var', sans-serif;
+    min-width: 100vw;
   }
 }
 

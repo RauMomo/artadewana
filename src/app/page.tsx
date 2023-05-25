@@ -16,8 +16,8 @@ export default function Home() {
 
   return (
     <div className="block m-0 place-content-start bg-white">
-      <main className="relative max-w-screen-xl">
-        <section className="max-w-screen-xl container bg-origin-border bg-no-repeat bg-cover items-stretch bg-center self-auto bg-local bg-[url('https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2.png')] bg-blend-multiply">
+      <main className="relative min-w-full">
+        <section className="min-w-full container bg-origin-border bg-no-repeat bg-cover items-stretch bg-center self-auto bg-local bg-[url('https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2.png')] bg-blend-multiply">
           <div className="grid grid-cols-12 max-w-full">
             <div className="grid grid-rows-1 col-start-2 col-end-6 p-14 justify-between items-start place-content-start">
               <div className='h-44 lg:h-44 md:h-28 sm:h-14'></div>
@@ -30,7 +30,7 @@ export default function Home() {
               </div>
           </div>
         </section>
-        <section className='max-w-screen-xl container px-8 py-8 items-center content-center bg-center text-center'>
+        <section className='min-w-full container px-8 py-8 items-center content-center bg-center text-center'>
           <div className="text-black">Berdasarkan Kategori</div>
           <div className='inline-grid grid-cols-category gap-20 h-72 align-middle mt-8 mb-4'>
             <CategoryMenu name='Gerabah' />
