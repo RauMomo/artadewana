@@ -1,14 +1,13 @@
 "use client";
 import fetchProducts from "@/hooks/product";
 import { Direction } from "@/utils/enum";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import ProductItem from "./ProductItem";
 
 export default function CategoryBanner({ align, name, desc }: { align: Direction, name: string, desc: string }) { 
-    // const burritoRef = doc(useFirestore(), 'tryreactfire', 'burrito');
-
-  // const { status, data } = useFirestoreDocData(burritoRef);
-  // const {data : products} = useFirestoreCollection(itemsRef);
+  const router = useRouter();
 
   const { loading, error, products } = fetchProducts();
 
@@ -37,8 +36,8 @@ export default function CategoryBanner({ align, name, desc }: { align: Direction
               <div className='bg-slate-300 inline-grid grid-rows-4 p-6 rounded-sm'>
                 <div className='text-3xl row-start-1'>{name.toUpperCase()}</div>
                 <div className='text-lg row-start-2'>{desc}</div>
-                <div className='row-start-4'>
-                  <div className='border-2 border-solid border-black cursor-pointer inline-block p-2'>Eksplor Produk</div>
+                  <div className='row-start-4'>
+                      <button className='border-2 border-solid border-black cursor-pointer inline-block p-2' onClick={() => router.push('/products')}>Eksplor Produk</button>
                 </div>
               </div>
             </div>
@@ -54,8 +53,10 @@ export default function CategoryBanner({ align, name, desc }: { align: Direction
               <div className='bg-slate-300 inline-grid grid-rows-4 p-6 rounded-sm'>
                 <div className='text-3xl row-start-1'>{name.toUpperCase()}</div>
                 <div className='text-lg row-start-2'>{desc}</div>
-                <div className='row-start-4'>
-                  <div className='border-2 border-solid border-black cursor-pointer inline-block p-2'>Eksplor Produk</div>
+                  <div className='row-start-4'>
+                    <Link href={'/products'}>
+                      <div className='border-2 border-solid border-black cursor-pointer inline-block p-2'>Eksplor Produk</div>
+                    </Link>
                 </div>
               </div>
             </div>
