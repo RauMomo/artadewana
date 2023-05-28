@@ -1,10 +1,7 @@
-import React from 'react';
-import FooterMenu from "./FooterMenu";
-import Image from 'next/image';
-import igLogo from '@/public/ig-logo.png';
 import fbLogo from '@/public/fb-logo.png';
+import igLogo from '@/public/ig-logo.png';
 import twtLogo from '@/public/twitter-logo.png';
-import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer () {
   return (
@@ -15,7 +12,7 @@ export default function Footer () {
           <div className="flex-col flex-auto items-start align-baseline justify-items-start">
           <p className="my-4 mx-0.5 text-black font-thin hover:text-amber-600 text-left content-start">Menu</p>
           <nav aria-label="Footer Navigation - Menu" className="mt-6">
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-4 text-sm text-black">
               <li>
                 <a href="#" className="hover:text-amber-600 transition">
                   Tentang Kami
@@ -28,7 +25,7 @@ export default function Footer () {
         <div className="flex-1 relative items-start justify-items-start">
           <p className="my-4 text-black font-thin hover:text-amber-600">Kategori</p>
           <nav aria-label="Footer Navigation - Kategori" className="mt-6">
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-4 text-sm text-black">
               <li>
                 <a href="#" className="hover:text-amber-600 transition ">
                   Gerabak
