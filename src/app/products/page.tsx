@@ -1,18 +1,26 @@
 "use client"
 
-import ProductItem from "@/components/ProductItem";
+import ProductItems from "@/components/ProductItems";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import fetchProducts from "@/hooks/product";
+import { Product, categoryLists, fetchProductsByCategory } from "@/hooks/product";
 import { useState } from "react";
 
 export default function Products() {
-  const categoryList = ['Gerabah', 'Keramik', 'Porcelain', 'Bata & Genteng']
-  var [selectedCategory, setSelectedCategory] = useState(categoryList[0])
-   const { loading, error, products } = fetchProducts();
+  var [selectedCategory, setSelectedCategory] = useState(categoryLists[0])
+  var [products, setProducts] = useState<Product[]>([])
+  
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     var { loading, error, products } = await fetchProductsByCategory({ categoryIndex: categoryLists.indexOf(selectedCategory) });
+  //     setProducts(products);
+  //   }
+  //   console.log('ada brp' + products.length.toString())
+  //   fetchData();  
+  // })
 
   return (
-    <div className="block m-0 place-content-start bg-white">
+    <div className="flex m-0 place-content-start bg-white h-auto">
       <main className="relative min-w-full">
         <Header />
         {/* breadcrumb */}
@@ -40,8 +48,11 @@ export default function Products() {
                <span className="ml-3 pr-12">Pilih Kategori</span>
             </a>
               </li>
-              {categoryList.map((category, index, arr) => (
-                <a href="#" className={(index == 0 ? 'selected-sidebar' : 'unselected-sidebar')}>
+              {categoryLists.map((category, index, arr) => (
+                <a href="#" className={(index == categoryLists.indexOf(selectedCategory) ? 'selected-sidebar' : 'unselected-sidebar')} onClick={async () => {
+                  setSelectedCategory(category);
+                  fetchProductsByCategory({ categoryIndex: index });
+                }}>
                   <span className="flex-1 ml-3 whitespace-nowrap pr-12">{category}</span>
                 </a>
               ))}
@@ -52,13 +63,9 @@ export default function Products() {
               {selectedCategory}
             </div>
             <div className="grid-cols-5 grid-rows-2 grid-flow-row grid gap-10 my-4">
-            {(!loading) && ( 
+            {( 
             <>
-              {products.map((product, i) => {
-                return (
-                  <ProductItem id={product.id} name={product.name} price={product.price} image={""} key={i}/>
-                )
-              })}
+              <ProductItems catIndex={categoryLists.indexOf(selectedCategory)} catName={`${selectedCategory}`} />
             </>
           )},
           </div>

@@ -2,9 +2,8 @@
 
 import frstore from "@/network/firebase_config";
 import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
 
-interface Product {
+export interface Product {
   name: string;
   desc: string;
   price: number;
@@ -13,15 +12,14 @@ interface Product {
   id: number;
 }
 
+export const categoryLists = ['Gerabah', 'Keramik', 'Porcelain', "Bata & Genteng" ]
+
 export default function fetchProducts() {  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [loading, setLoading] = useState(null)
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [error, setError] = useState(null)
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [products, setProducts] = useState<Product[]>([])
+  var loading = false;
+  var error = '';
+  var products : Array<Product> = [];
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
     let productList = new Array();
     async function getProducts(){
       try {
@@ -37,14 +35,51 @@ export default function fetchProducts() {  // eslint-disable-next-line react-hoo
               id: element.get("id"),
             },)
           });
-          setProducts(productList)
+          products = productList;
        }
       } catch (error) {
         console.log(error)
       }
     }
     getProducts()
-  }, [])
 
   return {loading, error, products}
 }
+
+export function fetchProductsByCategory({ categoryIndex }: { categoryIndex: number }) {  // eslint-disable-next-line react-hooks/rules-of-hooks
+  var loading = false;
+  var error = '';
+  var products : Array<Product> = [];
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+    let productList = new Array();
+    async function getProducts(){
+      try {
+        const docSnap = await getDocs(collection(frstore, 'products'))
+        if (!docSnap.empty) {
+          docSnap.docs.forEach((element, index, arr) => {
+            if (element.get('category') == categoryLists[categoryIndex]) {
+              if (productList.length <= 15) {
+                productList.push( <Product>{
+                  name: element.get("name"),
+                  category: element.get("category"),
+                  desc: element.get("desc"),
+                  price: element.get("price"),
+                  sellerId: element.get("seller_id"),
+                  id: element.get("id"),
+                },
+              ) 
+              }
+            }
+          });
+          products = productList;
+          console.log(products.length.toString())
+       }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getProducts()
+
+  return {loading, error, products}
+}
+
