@@ -22,6 +22,9 @@ module.exports = {
         black: "#222222",
         main100: "#FFF7EA",
         whatsappColor: "#50CD5E",
+        instaColor: "#A237B8",
+        twitterColor: "#1CB7EB",
+        fbcolor: "#0572E6",
       },
       screens: {
         sm: "480px",

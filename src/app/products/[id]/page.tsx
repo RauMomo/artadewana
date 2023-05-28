@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { AiOutlineFileImage } from "react-icons/ai";
-import logo from "../../../public/image-1.png";
+import logo from "../../../public/wa-logo.png";
 
 export default function ProductWithId({ params }: { params: number }) {
   const router = useRouter();
