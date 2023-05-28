@@ -74,7 +74,7 @@ export default function CategoryBanner({ align, name, desc }: { align: Direction
             <>
               {products.map((product, i) => {
                 return (
-                  <ProductItem name={product.name} price={product.price} image={""} key={i}/>
+                  <ProductItem id={product.id} name={product.name} price={product.price} image={""} key={i}/>
                 )
               })}
             </>

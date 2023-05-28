@@ -10,6 +10,7 @@ interface Product {
   price: number;
   category: string;
   sellerId: number;
+  id: number;
 }
 
 export default function fetchProducts() {  // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -33,6 +34,7 @@ export default function fetchProducts() {  // eslint-disable-next-line react-hoo
               desc: element.get("desc"),
               price: element.get("price"),
               sellerId: element.get("seller_id"),
+              id: element.get("id"),
             },)
           });
           setProducts(productList)
