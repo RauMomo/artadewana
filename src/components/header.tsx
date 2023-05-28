@@ -1,4 +1,6 @@
 "use client"
+
+import { categoryLists } from "@/hooks/product";
 import Image from "next/image";
 import { useState } from 'react';
 import fbLogo from "../public/fb-logo.png";
@@ -21,15 +23,18 @@ export default function Header() {
   return (
     <div className="bg-main min-w-full max-w-fit ">
       <div className="flex items-center mx-auto text-2xl font-bold place-content-center py-10 text-black border-b-4 border-white">Artadewana</div>
-      <div className="flex items-center justify-center">
-        <HeaderMenu navigateTo="/" title="Gerabah" />
-        <HeaderMenu navigateTo="/" title="Keramik" />
-        <HeaderMenu navigateTo="/" title="Porcelain" />
-        <HeaderMenu navigateTo="/" title="Bata & Genteng" />
-        <HeaderMenu navigateTo="/" title="Hubungi Kami" onClick={() => {
+      <div className="flex items-censter justify-center">
+        {categoryLists.map((category, index) => {
+          return (
+            <>
+              <HeaderMenu props={category} title={category} />
+            </>
+          )
+        })}
+        <HeaderMenu title="Hubungi Kami" onClick={() => {
           openPopup()
         }}/>
-        <HeaderMenu navigateTo="/" title="Tentang Kami" />
+        <HeaderMenu title="Tentang Kami" />
               {isPopupOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-10 bg-black bg-opacity-40">
           <div className="bg-white rounded-lg h-3/5 w-1/3 relative flex flex-col items-center text-white">
