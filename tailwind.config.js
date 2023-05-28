@@ -21,6 +21,7 @@ module.exports = {
         white: "#F9F8F6",
         black: "#222222",
         main100: "#FFF7EA",
+        whatsappColor: "#50CD5E",
       },
       screens: {
         sm: "480px",
