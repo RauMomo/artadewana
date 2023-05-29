@@ -61,7 +61,7 @@ export default function Home() {
             })}
           </div>
         </main>
-        <Footer className="w-full" />
+        <Footer />
       </div>
   );
 }
