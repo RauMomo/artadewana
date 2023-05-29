@@ -46,20 +46,21 @@ export default function fetchProducts() {  // eslint-disable-next-line react-hoo
   return {loading, error, products}
 }
 
-export function fetchProductsByCategory({ categoryIndex }: { categoryIndex: number }) {  // eslint-disable-next-line react-hooks/rules-of-hooks
+export async function fetchProductsByCategory({ categoryIndex, numberOfItem }: { categoryIndex: number, numberOfItem? : number }) {  // eslint-disable-next-line react-hooks/rules-of-hooks
   var loading = false;
   var error = '';
-  var products : Array<Product> = [];
+  var products: Array<Product> = [];
+  var maxQuery = numberOfItem ?? 10
   // eslint-disable-next-line react-hooks/rules-of-hooks
-    let productList = new Array();
     async function getProducts(){
       try {
         const docSnap = await getDocs(collection(frstore, 'products'))
         if (!docSnap.empty) {
+          
           docSnap.docs.forEach((element, index, arr) => {
             if (element.get('category') == categoryLists[categoryIndex]) {
-              if (productList.length <= 15) {
-                productList.push( <Product>{
+              if (products.length <= maxQuery) {
+                products.push( <Product>{
                   name: element.get("name"),
                   category: element.get("category"),
                   desc: element.get("desc"),
@@ -71,14 +72,13 @@ export function fetchProductsByCategory({ categoryIndex }: { categoryIndex: numb
               }
             }
           });
-          products = productList;
-          console.log(products.length.toString())
+          console.log('di function ada brp:' + products);
        }
       } catch (error) {
         console.log(error)
       }
     }
-    getProducts()
+    await getProducts()
 
   return {loading, error, products}
 }
