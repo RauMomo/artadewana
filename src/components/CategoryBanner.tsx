@@ -1,24 +1,31 @@
 "use client";
-import { Product, categoryLists, fetchProductsByCategory } from "@/hooks/product";
+import { ProductsContext } from "@/context/GlobalContext";
+import { Product } from "@/hooks/product";
 import { Direction } from "@/utils/enum";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import React from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import ProductItem from "./ProductItem";
 
 export default function CategoryBanner({ align, name, desc }: { align: Direction, name: string, desc: string }) { 
   const router = useRouter();
 
-  var [products, setProducts] = useState<Product[]>([{name: 'qiko', category: 'Keramik', desc: 'asdad', price: 100000, sellerId: 2, id: 1}])
+  const { dispatch, state } = React.useContext(ProductsContext); 
+  var filteredProducts: Product[] = [];
+  const { products } = state;
+  
+  filteredProducts = products.filter((product, index, arr) => product.category == name);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      var { loading, error, products } = await fetchProductsByCategory({ categoryIndex: categoryLists.indexOf(name) });
-      setProducts(products);
-    }
-    fetchData();  
-  }, [name])
+  // useEffect(() => {
+  //   filteredProducts = products;
+  //   function filterData() {
+  //     console.log('berapa data disinitializedz' + products.length)
+  //     var { loading, error, newProducts} = fetchProductsByCategory({ categoryIndex: categoryLists.map((value) => value.toLowerCase).indexOf(name.toLowerCase), products: products });
+  //     filteredProducts = newProducts; 
+  //   }
+  //   filterData();
+  // }, [])
 
   return (
       <div>
@@ -66,7 +73,7 @@ export default function CategoryBanner({ align, name, desc }: { align: Direction
         <div className='grid grid-cols-6 grid-flow-col-dense px-20 gap-4 h-72 align-middle mt-8 mb-4 px-auto'>
           {(
             <>
-              {products.map((product, i) => {
+              {filteredProducts.map((product, i) => {
                 return (
                   <ProductItem id={product.id} name={product.name} price={product.price} image={""} key={i}/>
                 )
@@ -85,5 +92,20 @@ export default function CategoryBanner({ align, name, desc }: { align: Direction
           </div>
         </section>
       </div>
+  );
+}
+
+async function Products({ promise }: { promise: Promise<Product[]> }) {
+  const products = await promise;
+
+  return (
+    <>
+      {products.map((product, i) => {
+        return (
+          <ProductItem id={product.id} name={product.name} price={product.price} image={""} key={i} />
+        )
+      },
+      )}
+    </>
   );
 }

@@ -47,11 +47,11 @@ export default function Header() {
       </div>
       <div className="h-1 min-w-screen bg-white border-white" />
       <div className="items-center justify-center flex-row mr-auto ml-auto">
-        <ul className="flex flex-row font-medium my-2 rounded-lg bgt-main">
+        <ul className="flex flex-row font-medium my-2 rounded-lg bgt-main" key={'ul'}>
         {categoryLists.map((category, index) => {
           return (
             <>
-              <li>
+              <li key={index}>
                 <HeaderMenu props={category} title={category} navigateTo="/products" key={index} />
               </li>
             </>

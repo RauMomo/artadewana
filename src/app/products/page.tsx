@@ -3,15 +3,23 @@
 import ProductItems from "@/components/ProductItems";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
+import { ProductsContext } from "@/context/GlobalContext";
 import { categoryLists } from "@/hooks/product";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Products() {
   var [selectedCategory, setSelectedCategory] = useState(categoryLists[0])
 
-  const propValue = useSearchParams();
+   const propValue = useSearchParams();
+   
+   const { dispatch, state } = React.useContext(ProductsContext);
+
+   dispatch({
+    type: "SET_PRODUCT_LIST", 
+    products: [{name: 'Robert', desc: 'Qikoo', category: 'Keramik', price: 50000, sellerId: 2, id: 1}]
+  })
 
   
   // useEffect(() => {
