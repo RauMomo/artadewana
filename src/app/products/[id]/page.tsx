@@ -1,16 +1,29 @@
 "use client"
 import Footer from "@/components/footer";
 import Header from "@/components/header";
+import { ProductsContext } from "@/context/GlobalContext";
+import { FormatMoney } from "@/utils/currency";
 import redirectWa from "@/utils/redirect";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { useContext, useEffect } from "react";
 import { AiOutlineFileImage } from "react-icons/ai";
 import logo from "../../../public/wa-logo.png";
 
 export default function ProductWithId({ params }: { params: number }) {
   const router = useRouter();
   const { query } = useParams();
+
+  const { dispatch, state } = useContext(ProductsContext);
+
+  var currProduct = state.currProduct;
+  var currCategory = state.currCategory;
+
+  useEffect(() => {
+
+  })
+
     return (
     <div className="block m-0 place-content-start bg-white">
       <main className="relative min-w-full">
@@ -27,32 +40,44 @@ export default function ProductWithId({ params }: { params: number }) {
             <li>
               <div className="flex items-center">
                 <svg aria-hidden="true" className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                <a href="/products" className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">GERABAH</a>
+                  <a href="/products" className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">{currCategory}</a>
               </div>
               </li>
             <li>
               <div className="flex items-center">
                 <svg aria-hidden="true" className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                <a href="#" className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">NAMA PRODUK</a>
+                  <a href="#" className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">{currProduct?.name}</a>
                 </div>
               </li>
           </ol> 
           </nav>
           <div className="container flex m-auto justify-start fit-vh">
             <div className="flex flex-small items-center h-4/5 justify-center bg-gray-300 mx-6">
-              <AiOutlineFileImage alignmentBaseline='middle' />
+              {
+                currProduct?.image == null || currProduct?.image === undefined && (<>
+                  <AiOutlineFileImage alignmentBaseline='middle' />
+                </>)
+              }
+              {
+                currProduct?.image!= null && currProduct?.image.length != 0 && (<>
+                  <Image src={currProduct.image} alt="Info Produk" loading="lazy" fill={true} style={{
+                    objectFit:'cover', objectPosition:'center'}}/>
+                </>)
+              }
             </div>
             <div className="flex-large items-start h-4/5 justify-start flex-nowrap mx-6 text-black">
               <div className="pb-8">
-                <div className="text-4xl">Nama Produk</div>
-                <div className="text-gray-400 text-lg leading-10">Kategori: Gerabah</div>
+                <div className="text-4xl">{currProduct?.name}</div>
+                <div className="text-gray-400 text-lg leading-10">Kategori: {currCategory}</div>
               </div>
               <div className="h-0.5 w-full border-gray-300 border-2 leading-4 bg-gray-300"></div>
               <div className="py-8">
-                <div className="text-4xl">Rp. 350.000</div>
+                <div className="text-4xl">
+                  <FormatMoney price={currProduct?.price ?? 0} />
+                </div>
               </div>
               <div>
-                <div className="text-gray-400 text-lg leading-12">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+                <div className="text-gray-400 text-lg leading-12">{ currProduct?.desc }</div>
               </div>
               {
                 (

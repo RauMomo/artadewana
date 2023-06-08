@@ -1,6 +1,7 @@
 "use client"
 
 import ProductsProvider from '@/context/GlobalContext'
+import { IntlProvider } from 'react-intl'
 import './globals.css'
 
 
@@ -23,6 +24,7 @@ export default function RootLayout({
   }) {
   return (
     <>
+    <IntlProvider locale='id' defaultLocale='id'>
       <ProductsProvider>
         <html>
           <head>
@@ -31,7 +33,8 @@ export default function RootLayout({
           </head>
           <body>{children}</body>
         </html>
-      </ProductsProvider>
+        </ProductsProvider>
+      </IntlProvider>
     </>
   )
 }

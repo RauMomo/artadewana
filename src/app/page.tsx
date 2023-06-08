@@ -5,10 +5,63 @@ import CategoryMenu from '@/components/CategoryMenu';
 import MainBanner from '@/components/MainBanner';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
+import { ProductsContext } from '@/context/GlobalContext';
+import { Product } from '@/hooks/product';
+import getImages from '@/network/api/images';
+import frstore from '@/network/firebase_config';
 import { Direction } from '@/utils/enum';
+import { collection, getDocs } from 'firebase/firestore';
+import { useContext, useEffect } from 'react';
+import { Circles } from 'react-loader-spinner';
+import useSWR from 'swr';
 
-export default async function Home() {
+export default function Home() {
   var categoryList = [{ name: "Gerabah", desc: "Gerabah Terbaik Untuk Anda" }, { name: "Keramik", desc: "Keramik Terbaik Untuk Anda" }, { name: "Porcelain", desc: "Porcelain Terbaik Untuk Anda" }, { name: "Bata & Genteng", desc: "Bata & Genteng Terbaik Untuk Anda" }]
+
+  const { dispatch, state } = useContext(ProductsContext);
+
+  const fetcher = async ({ collectionPath }: { collectionPath: string }) => {
+    var productList: Product[] = [];
+
+    const snapshot = await getDocs(collection(frstore, 'products'));
+    snapshot.docs.forEach(async (element, index, arr) => {
+      productList.push(
+        {
+          name: element.get("name"),
+          category: element.get("category"),
+          desc: element.get("desc"),
+          price: element.get("price"),
+          sellerId: element.get("seller_id"),
+          id: element.get("id"),
+          image: await getImages()
+        },
+      )
+    })
+    return productList;
+  };
+    
+  const { data, error, mutate, isLoading, isValidating } = useSWR('products', fetcher)
+
+  useEffect(() => {
+    console.log('ini keprint ga sblm dis')
+    dispatch({
+      type: 'SET_PRODUCT_LIST',
+      products: data ?? []
+    })
+    console.log('ini keprint ga setelah dis' + data?.length)
+  }, [data])
+
+  if (!data) {
+    return <div className="bg-white h-screen w-full block">
+        <div className="absolute top-1/2 left-1/2">
+          <Circles color={'green'} width={"80"} height={"80"} />
+        </div>
+    </div>
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
   
   return (
       <div className="block m-0 place-content-start bg-white">

@@ -1,28 +1,4 @@
-import { ProductsContext } from "@/context/GlobalContext";
-import fetchProducts from "@/hooks/product";
-import React, { useEffect } from "react";
-
-export async function getProducts() {
-    const fetchedProducts = await fetchProducts();
-    return fetchedProducts;
-}
-
 export default function MainBanner() {
-  const productsQuery = getProducts();
-  const productsValue = (Promise.all([productsQuery])).then((value) => value.at(0)?.products)
-
-  const { dispatch, state } = React.useContext(ProductsContext); 
-  
-  useEffect(() => {
-    const { products } = state;
-
-    dispatch({
-      type: "SET_PRODUCT_LIST", 
-      products: [{name: 'Robert', desc: 'Qikoo', category: 'Keramik', price: 50000, sellerId: 2, id: 1}]
-    })
-
-  }, [])
-
   return (
     <>
       <section className="min-w-full container bg-origin-border bg-no-repeat bg-cover items-stretch bg-center self-auto bg-local bg-[url('https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2.png')] bg-blend-multiply">

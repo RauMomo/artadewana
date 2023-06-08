@@ -10,7 +10,7 @@ export interface Product {
   category: string;
   sellerId: number;
   id: number;
-  image?: string;
+  image: string;
 }
 
 export const categoryLists = ['Gerabah', 'Keramik', 'Porcelain', "Bata & Genteng" ]
@@ -40,6 +40,7 @@ export default async function fetchProducts() {  // eslint-disable-next-line rea
             },)
           });
           products = productList;
+          console.log('di api ada brp?' + products.length)
        }
       } catch (error) {
         console.log(error)

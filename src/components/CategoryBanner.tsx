@@ -15,6 +15,8 @@ export default function CategoryBanner({ align, name, desc }: { align: Direction
   var filteredProducts: Product[] = [];
   const { products } = state;
   
+  console.log('berapa data disinitializedz' + products.length)
+
   filteredProducts = products.filter((product, index, arr) => product.category == name);
 
   // useEffect(() => {
@@ -65,17 +67,17 @@ export default function CategoryBanner({ align, name, desc }: { align: Direction
         </section>
         </>
       )}
-        <section className='min-w-full max-w-fit container px-8 py-8 items-center content-center bg-center text-center'>
+        <section className='min-w-full max-w-full container px-8 py-8 items-center content-center bg-center text-center'>
           <div className='flex-nowrap flex justify-between'>
             <div className="text-black flex-auto m-auto items-center flex-grow pl-12">Produk Paling Dicari</div>
             <div className='text-black inline-flex'>See All<span className='pl-2 mt-1'><AiOutlineArrowRight /></span></div>
           </div>
-        <div className='grid grid-cols-6 grid-flow-col-dense px-20 gap-4 h-72 align-middle mt-8 mb-4 px-auto'>
+        <div className='grid-container px-20 gap-4 h-80 align-middle mt-8 mb-4 px-auto max-w-full'>
           {(
             <>
               {filteredProducts.map((product, i) => {
                 return (
-                  <ProductItem id={product.id} name={product.name} price={product.price} image={""} key={i}/>
+                  <ProductItem id={product.id} name={product.name} price={product.price} image={product.image } product={product} key={i}/>
                 )
               })}
             </>
@@ -102,7 +104,7 @@ async function Products({ promise }: { promise: Promise<Product[]> }) {
     <>
       {products.map((product, i) => {
         return (
-          <ProductItem id={product.id} name={product.name} price={product.price} image={""} key={i} />
+          <ProductItem id={product.id} name={product.name} price={product.price} image={product.image} key={i} product={product} />
         )
       },
       )}

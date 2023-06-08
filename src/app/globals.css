@@ -33,6 +33,16 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%/3, max(200px, 100%/6)), 1fr));
+  grid-gap: 4px;
+  grid-row: 1;
+  grid-auto-flow: column;
+  overflow: hidden;
+
+}
+
 .selected-sidebar{
   display: flex;
   align-items: center;
