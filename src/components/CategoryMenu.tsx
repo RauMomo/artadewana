@@ -2,7 +2,7 @@ import { AiOutlineFileImage } from "react-icons/ai";
 
 export default function CategoryMenu({ name }: {name: string}) {
   return (
-      <div className=' bg-slate-300 align-bottom place-content-center justify-center'>
+      <div className=' bg-slate-300 align-bottom place-content-center justify-center px-8'>
         <div className='flex m-auto content-center h-48 w-full justify-center items-center'>
           <AiOutlineFileImage alignmentBaseline='middle' />
         </div>

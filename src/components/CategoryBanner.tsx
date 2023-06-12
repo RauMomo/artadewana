@@ -14,20 +14,10 @@ export default function CategoryBanner({ align, name, desc }: { align: Direction
   const { dispatch, state } = React.useContext(ProductsContext); 
   var filteredProducts: Product[] = [];
   const { products } = state;
-  
-  console.log('berapa data disinitializedz' + products.length)
+  const { defaultImage } = state;
+
 
   filteredProducts = products.filter((product, index, arr) => product.category == name);
-
-  // useEffect(() => {
-  //   filteredProducts = products;
-  //   function filterData() {
-  //     console.log('berapa data disinitializedz' + products.length)
-  //     var { loading, error, newProducts} = fetchProductsByCategory({ categoryIndex: categoryLists.map((value) => value.toLowerCase).indexOf(name.toLowerCase), products: products });
-  //     filteredProducts = newProducts; 
-  //   }
-  //   filterData();
-  // }, [])
 
   return (
       <div>
@@ -77,7 +67,7 @@ export default function CategoryBanner({ align, name, desc }: { align: Direction
             <>
               {filteredProducts.map((product, i) => {
                 return (
-                  <ProductItem id={product.id} name={product.name} price={product.price} image={product.image } product={product} key={i}/>
+                  <ProductItem id={product.id} name={product.name} price={product.price} image={defaultImage} product={product} key={i}/>
                 )
               })}
             </>

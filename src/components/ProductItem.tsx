@@ -6,15 +6,17 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { } from 'react-intl';
+import placeholder from "../../public/placeholder.png";
 
 export default function ProductItem({ id, name, price, image, product }: { id: number, name: string, price: number, image: string, product: Product }){
   const router = useRouter();
 
   const { dispatch, state } = useContext(ProductsContext);
+  const { defaultImage } = state;
 
   return (
     <Link href={`/products/${id}` }>
-      <div className=' bg-slate-300 align-bottom place-content-center justify-start text-left mb-4 max-w-full' onClick={() => {
+      <div className=' bg-white align-bottom place-content-center justify-start text-left mb-4 max-w-full relative' onClick={() => {
         dispatch({
           type: 'SET_CURRENT_PRODUCT',
           product: product
@@ -25,7 +27,7 @@ export default function ProductItem({ id, name, price, image, product }: { id: n
         })
       }}>
         <div className='flex m-auto content-center h-60 w-64 justify-center items-center'>
-          <Image src={image} alt={""} height={240} width={254}  />
+          <Image src={defaultImage} alt={""} height={100} width={250} placeholder="blur" blurDataURL={placeholder.src} onError={() => placeholder.src} style={{objectFit: "cover", borderRadius: '0%', }} loading="eager" decoding="async" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
         </div>
       </div>
       <div className="text-left">

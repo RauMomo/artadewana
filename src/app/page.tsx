@@ -33,7 +33,7 @@ export default function Home() {
           price: element.get("price"),
           sellerId: element.get("seller_id"),
           id: element.get("id"),
-          image: await getImages()
+          image: ''
         },
       )
     })
@@ -43,12 +43,21 @@ export default function Home() {
   const { data, error, mutate, isLoading, isValidating } = useSWR('products', fetcher)
 
   useEffect(() => {
-    console.log('ini keprint ga sblm dis')
+    var imageLink = '';
     dispatch({
       type: 'SET_PRODUCT_LIST',
       products: data ?? []
     })
-    console.log('ini keprint ga setelah dis' + data?.length)
+
+    function fetchImageLink() {
+      getImages().then(res => {
+        dispatch({
+          type: 'SET_DEFAULT_IMAGE',
+          link: res
+        })
+      })
+    }
+    fetchImageLink()
   }, [data])
 
   if (!data) {
@@ -69,8 +78,8 @@ export default function Home() {
           <Header/>
           <MainBanner />
           <section className='min-w-full container px-8 py-8 items-center content-center bg-center text-center'>
-            <div className="text-black">Berdasarkan Kategori</div>
-            <div className='inline-grid grid-cols-category gap-20 h-72 align-middle mt-8 mb-4'>
+          <div className="text-black">Berdasarkan Kategori</div>
+            <div className='inline-grid grid-cols-category grid-cols-category-sm gap-20 h-72 align-middle mt-8 mb-4'>
               <CategoryMenu name='Gerabah' />
               <CategoryMenu name='Keramik' />
               <CategoryMenu name='Porcelain' />
