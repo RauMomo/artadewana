@@ -105,3 +105,49 @@ body {
 .fit-vh{
   height: 80vh;
 }
+
+.nav-bar{
+  display:flex;
+  flex-direction: row;
+  font-weight: 500;
+  margin-top: 0.5rem/* 8px */;
+  margin-bottom: 0.5rem/* 8px */;
+  border-radius: 0.5rem;
+    --tw-bg-opacity: 1;
+  background-color: rgb(250 224 177 / var(--tw-bg-opacity));
+}
+
+.nav-bar-md{
+  display: grid;
+  position: absolute;
+  background: #404040;
+  width: 100%;
+  top: 75px;
+  left: 0;
+  transform: translateY(-100%);
+  z-index: -1;
+  transition: .6s;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: inherit;
+}
+
+.burger-bar {
+    width: 4em;
+    height: 0.5em;
+    background-color: rgb(0, 183, 255);
+    border-radius: 0.5em;
+    z-index: 2;
+}
+
+.menu {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
