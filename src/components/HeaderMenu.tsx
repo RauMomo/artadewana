@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function HeaderMenu({ title, props, onClick, navigateTo }: { title: string, props?: string | undefined, onClick?: () => void, navigateTo? : string}) {
   var navigate = navigateTo ?? ''
   return (
-    <Link href={{pathname: navigate, query: { category: props}}}>
+    <Link href={{pathname: navigate, query: { category: props} }}>
       <nav className="mx-4 my-4 lg:mx-6 text-black font-thin hover:text-amber-600 cursor-pointer" onClick={() => {
         onClick?.call(null)
       }}>

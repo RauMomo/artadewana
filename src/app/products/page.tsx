@@ -4,39 +4,61 @@ import ProductItems from "@/components/ProductItems";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ProductsContext } from "@/context/GlobalContext";
-import { categoryLists } from "@/hooks/product";
+import { Product, categoryLists, fetchProductsByCategory } from "@/hooks/product";
+import frstore from "@/network/firebase_config";
+import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 
 export default function Products() {
-  var [selectedCategory, setSelectedCategory] = useState(categoryLists[0])
+   var [selectedCategory, setSelectedCategory] = useState(categoryLists[0])
+   var [filteredProducts, setFilteredProducts] = useState<Array<Product>>([])
 
    const propValue = useSearchParams();
+   const router = useRouter();
+   var categoryName = decodeURIComponent(propValue.get('category') ?? '') ?? ''
    
    const { dispatch, state } = React.useContext(ProductsContext);
 
-   dispatch({
-    type: "SET_PRODUCT_LIST", 
-    products: [{name: 'Robert', desc: 'Qikoo', category: 'Keramik', price: 50000, sellerId: 2, id: 1}]
-  })
-
-  
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     var { loading, error, products } = await fetchProductsByCategory({ categoryIndex: categoryLists.indexOf(selectedCategory) });
-  //     setProducts(products);
-  //   }
-  //   console.log('ada brp' + products.length.toString())
-  //   fetchData();
-  // })
-  
+   const fetcher = async ({ collectionPath }: { collectionPath: string }) => {
+    var productList: Product[] = [];
+    const snapshot = await getDocs(collection(frstore, 'products'));
+    snapshot.docs.forEach(async (element, index, arr) => {
+      productList.push(
+        {
+          name: element.get("name"),
+          category: element.get("category"),
+          desc: element.get("desc"),
+          price: element.get("price"),
+          sellerId: element.get("seller_id"),
+          id: element.get("id"),
+          image: ''
+        },
+      )
+    })
+    return productList;
+  };
+    
+   const { data, error, mutate, isLoading, isValidating } = useSWR('products', fetcher)
+   
   useEffect(() => {
-    var categoryName = propValue.get('category') ?? ''
     if (categoryName.length != 0 && categoryLists.includes(categoryName)) {
       setSelectedCategory(categoryName)
     }
-  }, [])
+     
+     if (state.products.length == 0) {
+         dispatch({
+            type: 'SET_PRODUCT_LIST',
+            products: data ?? []
+         },)  
+     }
+
+     var filteredProducts = fetchProductsByCategory({products: data ?? [], categoryIndex: categoryLists.indexOf(categoryName) });
+     setFilteredProducts(filteredProducts.newProducts);
+
+  }, [data, categoryName])
 
   return (
     <div className="m-0 place-content-start bg-white h-auto items-start w-full">
@@ -91,7 +113,9 @@ export default function Products() {
                </li>
                {categoryLists.map((category, index, arr) => (
                <a href="#" className={(index == categoryLists.indexOf(selectedCategory) ? 'selected-sidebar' : 'unselected-sidebar')} onClick={async () => {
-                setSelectedCategory(category);
+                     setSelectedCategory(category);
+                     var encodedQuery = encodeURIComponent(category);
+                     router.push(`/products/?category=${encodedQuery}`)
                }}>
                <span className="ml-3 whitespace-nowrap pr-12">{category}</span>
                </a>
@@ -99,18 +123,18 @@ export default function Products() {
             </ul>
           </div>
           <div className="relative min-w-max h-screen ">
-            {/* <div className="text-black font-semibold text-lg">
-               {selectedCategory}
-            </div> */}
             <div className="mx-8 w-screen flex flex-auto flex-grow flex-shrink-0 items-stretch overflow-hidden">
                {( 
                <>
-               <ProductItems catIndex={categoryLists.indexOf(selectedCategory)} catName={`${selectedCategory}`} key={categoryLists.indexOf(selectedCategory)}/>
+               <ProductItems catIndex={categoryLists.indexOf(selectedCategory)} catName={`${selectedCategory}`} key={categoryLists.indexOf(selectedCategory)} filteredProducts={filteredProducts}/>
                </>
-               )},
-              </div>
-          </div>
-        </div>
+                    )},
+                 </div>
+               <button className="border-t-neutral-600 text-black m-8 p-4 bg-main font-light shadow-sm border-black border-2">
+                     Next page
+               </button>
+            </div>
+           </div>
       <Footer />
    </main>
 </div>
