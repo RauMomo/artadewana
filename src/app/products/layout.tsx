@@ -26,7 +26,7 @@ export default function ProductsLayout({children}: {
   return (
     <>
     <IntlProvider locale='id' defaultLocale='id'>
-      <ProductsProvider>
+      <ProductsProvider >
         <html>
           <head>
             <title>{`Hasil Pencarian Untuk ${extractedPayload}`}</title>

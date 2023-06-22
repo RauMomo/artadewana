@@ -35,6 +35,7 @@ export const ProductsContext = React.createContext<{ state: StateType; dispatch:
 const productReducer = (state :StateType, action: ActionType) : StateType => {
   switch (action.type) {
     case 'SET_CATEGORY_TYPE': {
+      console.log('di reducer: ' + action.category);
       return { ...state, currCategory: action.category};
     }
     case 'SET_DEFAULT_IMAGE': {
@@ -44,6 +45,7 @@ const productReducer = (state :StateType, action: ActionType) : StateType => {
       return { ...state, products: action.products};
     }
     case 'SET_CURRENT_PRODUCT': {
+      console.log('di reducer: ' + action.product.name);
       return { ...state, currProduct: action.product};
     }
     default:

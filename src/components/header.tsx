@@ -1,6 +1,7 @@
 "use client"
 
 import { categoryLists } from '@/hooks/product';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import HeaderMenu from './HeaderMenu';
 import PopupMenu from './PopupMenu';
@@ -10,6 +11,7 @@ export default function Header() {
   const [burgerClass, setBurgerClass] = useState("burger-bar unclicked")
   const [menuClass, setMenuClass] = useState("menu hidden")
   const [isMenuClicked, setIsMenuClicked] = useState(false)
+  const router = useRouter();
 
   const openPopup = () => {
     setIsPopupOpen(true);
@@ -63,7 +65,10 @@ export default function Header() {
         <ul className="block font-medium mt-4 rounded-lg align-middle text-white">
         {categoryLists.map((category, index) => {
           return (
-              <li className="h-20">
+            <li className="h-20 hover:text-orange-800" onClick={() => {
+                var encodedQuery = encodeURIComponent(category);
+                router.push(`/products/?category=${encodedQuery}`)
+              }}>
                   <div className="align-middle px-4 text-black">{category}</div>
               </li>
           )

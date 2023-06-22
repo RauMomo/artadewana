@@ -14,15 +14,15 @@ export default function ProductItem({ id, name, price, image, product }: { id: n
   return (
     <Link href={`/products/${id}` }>
       <div className=' bg-white align-bottom place-content-center justify-start text-left mb-4 max-w-full relative' onClick={() => {
+        var newProduct : Product = { name: product.name, price: product.price, image: product.image, category: product.category, desc: product.desc, id: product.id, sellerId: product.sellerId}
         dispatch({
           type: 'SET_CURRENT_PRODUCT',
-          product: product
-        },)
+          product: newProduct
+        })
         dispatch({
           type: 'SET_CATEGORY_TYPE',
           category: product.category
         })
-        console.log(state.currProduct?.category)
       }}>
         <div className='flex m-auto content-center h-60 w-64 justify-center items-center'>
           <Image src={defaultImage} alt={""} height={100} width={250} placeholder="blur" blurDataURL={placeholder.src} onError={() => placeholder.src} style={{objectFit: "cover", borderRadius: '0%', }} loading="eager" decoding="async" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />

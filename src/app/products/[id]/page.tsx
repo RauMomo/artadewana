@@ -2,13 +2,13 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ProductsContext } from "@/context/GlobalContext";
+import { Product } from "@/hooks/product";
 import { FormatMoney } from "@/utils/currency";
 import redirectWa from "@/utils/redirect";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
-import { AiOutlineFileImage } from "react-icons/ai";
+import { useContext } from "react";
 import logo from "../../../public/wa-logo.png";
 
 export default function ProductWithId({ params }: { params: number }) {
@@ -16,15 +16,13 @@ export default function ProductWithId({ params }: { params: number }) {
   const { query } = useParams();
 
   const { dispatch, state } = useContext(ProductsContext);
+  var currProduct : Product | null = state.currProduct;
+  var currCategory: String = state.currCategory;
+  var imgValue = state.defaultImage;
 
-  var currProduct = state.currProduct;
-  var currCategory = state.currCategory;
+  console.log(imgValue);
 
-  useEffect(() => {
-
-  })
-
-    return (
+  return (
     <div className="block m-0 place-content-start bg-white">
       <main className="relative min-w-full">
         <Header />
@@ -53,15 +51,9 @@ export default function ProductWithId({ params }: { params: number }) {
           </nav>
           <div className="container flex m-auto justify-start fit-vh">
             <div className="flex flex-small items-center h-4/5 justify-center bg-gray-300 mx-6">
-              {
-                currProduct?.image == null || currProduct?.image === undefined && (<>
-                  <AiOutlineFileImage alignmentBaseline='middle' />
-                </>)
-              }
-              {
-                currProduct?.image!= null && currProduct?.image.length != 0 && (<>
-                  <Image src={currProduct.image} alt="Info Produk" loading="lazy" fill={true} style={{
-                    objectFit:'cover', objectPosition:'center'}}/>
+              {(<>
+                  <Image src={imgValue} alt="Info Produk" loading="eager" decoding="async" height={800} width={550} style={{
+                    objectFit:'cover', objectPosition:'center', height: '750px', maxHeight: '75vh'}} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw,"/>
                 </>)
               }
             </div>

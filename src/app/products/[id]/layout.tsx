@@ -1,4 +1,3 @@
-import ProductsProvider from "@/context/GlobalContext"
 
 const metadata = {
   title: 'Artadewana',
@@ -15,7 +14,6 @@ export default function RootLayout({
   }) {
   return (
     <>
-      <ProductsProvider>
         <html>
           <head>
             <title>Artadewana - Detail Produk</title>
@@ -23,7 +21,6 @@ export default function RootLayout({
           </head>
           <body>{children}</body>
         </html>
-      </ProductsProvider>
     </>
   )
 }

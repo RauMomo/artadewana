@@ -5,6 +5,7 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ProductsContext } from "@/context/GlobalContext";
 import { Product, categoryLists, fetchProductsByCategory } from "@/hooks/product";
+import getImages from "@/network/api/images";
 import frstore from "@/network/firebase_config";
 import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
@@ -57,6 +58,16 @@ export default function Products() {
 
      var filteredProducts = fetchProductsByCategory({products: data ?? [], categoryIndex: categoryLists.indexOf(categoryName) });
      setFilteredProducts(filteredProducts.newProducts);
+
+   function fetchImageLink() {
+      getImages().then(res => {
+        dispatch({
+          type: 'SET_DEFAULT_IMAGE',
+          link: res
+        })
+      })
+    }
+    fetchImageLink()
 
   }, [data, categoryName])
 
